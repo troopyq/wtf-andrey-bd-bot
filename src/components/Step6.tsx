@@ -1,7 +1,8 @@
 import { Button, Image } from "antd"
 import { IPropsStep } from "./types"
 import { Wrapper } from "./Wrapper"
-import imgUrl from '../assets/Step6.jpg'
+
+const imgUrl = new URL('../../public/Step6.jpg', import.meta.url).href
 
 const Step2 = ({onNext}: IPropsStep) => {
   return <Wrapper>
