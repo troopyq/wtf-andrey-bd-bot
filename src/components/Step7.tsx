@@ -214,7 +214,7 @@ let TICKETS = [
     ],
   },
 ];
-TICKETS = [TICKETS[0]]
+
 const Step7 = ({ onNext }: IPropsStep) => {
   const [ticketId, setTicketId] = useState(0);
   const [errorId, setErrorId] = useState<number | null>(null);
