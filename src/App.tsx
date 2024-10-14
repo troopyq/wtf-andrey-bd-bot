@@ -13,14 +13,14 @@ tg.MainButton.color = '#3ecd00';
 tg.MainButton.textColor = '#ffffff';
 
 tg.expand()
-tg.disableVerticalSwipes()
+// tg.disableVerticalSwipes()
 
-tg.onEvent('mainButtonClicked', function(){
-	tg.sendData("Отлично! Жди свой приз!"); 
-	//при клике на основную кнопку отправляем данные в строковом виде
+tg.onEvent('mainButtonClicked', function () {
+  tg.sendData("Отлично! Жди свой приз!");
+  //при клике на основную кнопку отправляем данные в строковом виде
 });
 
-const StepReload = ({onNext}: IPropsStep) => {
+const StepReload = ({ onNext }: IPropsStep) => {
 
   useEffect(() => {
     tg.CloudStorage.setItem('step', '1')
@@ -31,48 +31,48 @@ const StepReload = ({onNext}: IPropsStep) => {
 }
 
 function App() {
- 
+
   const [step, setStep] = useState<number>(0)
   console.log(WebApp.initDataUnsafe)
 
 
   useEffect(() => {
     tg.CloudStorage.getItem('step', (err, res) => {
-      console.log({err, res})
-      if(err || !res){
+      console.log({ err, res })
+      if (err || !res) {
         return tg.CloudStorage.setItem('step', '1')
       }
 
-      if(step > STEPS_COUNT){
+      if (step > STEPS_COUNT) {
         tg.CloudStorage.setItem('step', '1')
         setStep(1)
         return;
       }
 
       setStep(Number(res) || 1)
-    
+
     })
-   
+
   }, [])
 
   useEffect(() => {
-    if(step === STEPS_COUNT){
+    if (step === STEPS_COUNT) {
       tg.MainButton.show()
     } else if (tg.MainButton.isActive) {
       tg.MainButton.hide()
     }
-  },[step])
+  }, [step])
 
   const onNext = useCallback(() => {
-    if(step > STEPS_COUNT) {
+    if (step > STEPS_COUNT) {
       tg.CloudStorage.setItem('step', '1')
       setStep(1)
       return;
     }
 
-    if(step === STEPS_COUNT) return;
+    if (step === STEPS_COUNT) return;
 
-    if(!getComponent((step || 1) + 1)){
+    if (!getComponent((step || 1) + 1)) {
       tg.CloudStorage.setItem('step', '1')
       setStep(1)
       return;
@@ -88,48 +88,30 @@ function App() {
   }, [step])
 
   const onPrev = useCallback(() => {
-    if(step === 1) return;
+    if (step === 1) return;
     tg.CloudStorage.setItem('step', `${step - 1}`)
     setStep(step - 1)
   }, [step])
 
-  if(!step) {
+  if (!step) {
     return <LoadingOutlined />;
   }
 
   const Step = step <= STEPS_COUNT ? getComponent(step || 1) : StepReload;
 
   return (
-    <Flex vertical style={{minHeight: '95vh', width: '100%', paddingInline: '24px'}}>
-      <Flex style={{width: '100%'}} justify='space-between' align='center' gap='32px'>
-      <h3 >Шаг: {step} из {STEPS_COUNT}</h3>
-      {step > 1 && <Button onClick={onClearStep} variant='outlined' style={{background: 'transparent'}} color='danger'>Рестарт</Button>}
-      {step > 1 && <Button onClick={onPrev} variant='text'  color='primary'>Назад</Button>}
+    <Flex vertical style={{ minHeight: '95vh', width: '100%', paddingInline: '24px' }}>
+      <Flex style={{ width: '100%' }} justify='space-between' align='center' gap='32px'>
+        <h3 >Шаг: {step} из {STEPS_COUNT}</h3>
+        {step > 1 && <Button onClick={onClearStep} variant='outlined' style={{ background: 'transparent' }} color='danger'>Рестарт</Button>}
+        {step > 1 && <Button onClick={onPrev} variant='text' color='primary'>Назад</Button>}
       </Flex>
-    
 
-    <React.Suspense fallback={<Flex justify='center' align='center' style={{height: '100vh'}}><Skeleton active style={{width: '100%',height: '100%'}}/></Flex>}>
-      <Step onNext={onNext} />
-    </React.Suspense>
 
-   {/*  <Button onClick={() => {
-      (tg.CloudStorage.getItems(['time'], (err, res) => console.log('result', res)))
-      // tg.CloudStorage.setItem('time', new Date().toUTCString())
-      // setTimeout(()=> tg.HapticFeedback.impactOccurred('heavy'), 0)
-      // setTimeout(()=> tg.HapticFeedback.impactOccurred('rigid'), 200)
-      // setTimeout(()=> tg.HapticFeedback.impactOccurred('medium'), 400)
-      tg.HapticFeedback.notificationOccurred('success')
-      
-      tg.MainButton.show()
-      }} >
-    Show
-    </Button>
-    <Button onClick={() =>{
-      tg.HapticFeedback.notificationOccurred('error');
-      tg.MainButton.hide()
-      }} >
-    Hide
-    </Button> */}
+      <React.Suspense fallback={<Flex justify='center' align='center' style={{ height: '100vh' }}><Skeleton active style={{ width: '100%', height: '100%' }} /></Flex>}>
+        <Step onNext={onNext} />
+      </React.Suspense>
+
     </Flex>
   )
 }

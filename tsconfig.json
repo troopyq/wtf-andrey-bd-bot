@@ -10,6 +10,7 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
+    "allowJs": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
@@ -20,7 +21,7 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/server"],
+  "include": ["src", "server"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "ts-node": {
     "experimentalSpecifierResolution": "node",
