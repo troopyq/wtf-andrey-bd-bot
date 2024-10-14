@@ -8,12 +8,12 @@ import { resolve } from 'path';
 export default defineConfig({
   plugins: [react(), dynamicImportVars()],
   build: {
-    rollupOptions: {
-      input: {
-        server: resolve(__dirname, './src/server/server.ts'),
-        index: resolve(__dirname, './src/main.tsx')
-      }
-    },
+    // rollupOptions: {
+    //   input: {
+    //     server: resolve(__dirname, './src/server/server.ts'),
+    //     index: resolve(__dirname, './src/main.tsx')
+    //   }
+    // },
     outDir: './docs',
   },
   base: './',
