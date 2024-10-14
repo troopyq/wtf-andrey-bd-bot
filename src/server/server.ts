@@ -9,6 +9,7 @@ config();
   const idDima = process.env.TELEGRAM_DIMA;
   const idVlad = process.env.TELEGRAM_VLAD;
   const userAndrey = process.env.TELEGRAM_ANDREY_NICK;
+  const userDima = process.env.TELEGRAM_DIMA_NICK;
   const vaucherId = process.env.VAUCHER_ID;
 
   console.log('RUN TG BOT', process.env.NODE_ENV)
@@ -52,7 +53,7 @@ config();
     console.log(`SEND BUTTON SUCCESS: ${new Date().toUTCString()} : `, msg.chat.username);
     const chatId = msg.chat.id;
 
-    if (msg.chat.username === userAndrey) {
+    if ([userAndrey, userDima].includes(msg.chat.username)) {
       await bot.sendMessage(chatId, `Поздравляем с успешным прохождением теста!\n
   Но, перед тем как ты получишь водительское удостоверение, предлагаем пройти курс молодого шумахера на скоростных машинках)\n
   Добро пожаловать в клуб "Чудеса на виражах!"`);
