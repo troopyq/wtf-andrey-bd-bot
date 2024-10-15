@@ -9,7 +9,7 @@ import "./style.css";
 
 const tg = WebApp;
 
-const MAX_ERRORS = 0;
+const MAX_ERRORS = 2;
 
 let TICKETS = [
   {
